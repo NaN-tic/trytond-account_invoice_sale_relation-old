@@ -1,0 +1,11 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:account.invoice.line,sale:"
+msgid "Sale"
+msgstr "Venda"
+
+msgctxt "selection:account.invoice.line,sale:"
+msgid "Sale"
+msgstr "Venda"
