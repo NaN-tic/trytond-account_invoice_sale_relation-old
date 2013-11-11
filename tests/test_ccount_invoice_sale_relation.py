@@ -14,9 +14,9 @@ import trytond.tests.test_tryton
 from trytond.tests.test_tryton import test_depends
 
 
-class AccountInvoiceTestCase(unittest.TestCase):
+class AccountInvoiceSaleRelationTestCase(unittest.TestCase):
     '''
-    Test AccountInvoice module.
+    Test Account Invoice Sale Relation module.
     '''
 
     def setUp(self):
