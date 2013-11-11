@@ -1,5 +1,7 @@
+trytond-account_invoice_sale_relation
+=====================================
 
-This Module adds an explicit relation from invoices to sales.
+The account_invoice_sale_relation module of the Tryton application platform.
 
 Installing
 ----------
@@ -9,15 +11,22 @@ See INSTALL
 Support
 -------
 
-If you encounter any problems with this module, please don't hesitate to ask
-questions on the NaN·tic bug tracker, mailing list,
-wiki or IRC channel:
+For more information or if you encounter any problems with this module,
+please contact the programmers at
 
-*  http://doc.tryton-erp.es/
-*  http://bitbucket.org/nantic/trytond-account_invoice_sale_relation
-*  http://groups.tryton.org/
-*  http://wiki.tryton.org/
-*  irc://irc.freenode.net/tryton
+  Nan-Tic
+  --------------
+  website: http://www.nan-tic.com/
+  email: info@nan-tic.com
+
+If you encounter any problems with Tryton, please don't hesitate to ask
+questions on the Tryton bug tracker, mailing list, wiki or IRC channel:
+
+  http://doc.tryton-erp.es/
+  http://bitbucket.org/nantic/trytond-account_invoice_sale_relation
+  http://groups.tryton.org/
+  http://wiki.tryton.org/
+  irc://irc.freenode.net/tryton
 
 License
 -------
@@ -30,6 +39,6 @@ Copyright
 See COPYRIGHT
 
 
-For more information please visit the NaN·tic web site:
+For more information please visit the Tryton web site:
 
-  http://www.nan-tic.com/
+  http://www.tryton.org/
