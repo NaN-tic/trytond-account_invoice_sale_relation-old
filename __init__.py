@@ -8,4 +8,6 @@ def register():
     Pool.register(
         Invoice,
         InvoiceLine,
+        Move,
+        SaleLine,
         module='account_invoice_sale_relation', type_='model')
