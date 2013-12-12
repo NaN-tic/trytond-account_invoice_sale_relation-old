@@ -2,10 +2,26 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:account.invoice.line,moves:"
+msgid "Moves"
+msgstr "Moviments"
+
 msgctxt "field:account.invoice.line,sale:"
 msgid "Sale"
 msgstr "Venda"
 
-msgctxt "selection:account.invoice.line,sale:"
-msgid "Sale"
-msgstr "Venda"
+msgctxt "field:account.invoice.line,shipment_returns:"
+msgid "Shipment Returns"
+msgstr "Albarans de devolució"
+
+msgctxt "field:account.invoice.line,shipments:"
+msgid "Shipments"
+msgstr "Albarans"
+
+msgctxt "field:stock.move,invoice_line:"
+msgid "Invoice Line"
+msgstr "Linia de factura"
+
+msgctxt "view:account.invoice.line:"
+msgid "Relation"
+msgstr "Relacions"
