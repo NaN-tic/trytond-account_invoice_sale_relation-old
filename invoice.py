@@ -15,14 +15,30 @@ class Invoice():
             states={
                 'invisible': Eval('type').in_(['in_invoice', 'in_credit_note']),
                 }), 'get_sales')
+    shipments = fields.Function(
+        fields.Many2Many('stock.shipment.out', None, None, 'Shipments',
+            states={
+                'invisible': Eval('type').in_(['in_invoice', 'in_credit_note',
+                    'out_credit_note']),
+                }), 'get_shipments')
+    shipment_returns = fields.Function(
+        fields.Many2Many('stock.shipment.out.return', None, None,
+            'Shipment Returns',
+            states={
+                'invisible': Eval('type').in_(['in_invoice', 'in_credit_note',
+                    'out_invoice']),
+                }), 'get_shipment_returns')
 
-    @classmethod
-    def get_sales(cls, invoices, name):
-        origins = {}
-        for invoice in invoices:
-            origins[invoice.id] = list(set(
-                    [l.sale.id for l in invoice.lines if l.sale]))
-        return origins
+    def get_sales(self, name):
+        return list(set([l.sale.id for l in self.lines if l.sale]))
+
+    def get_shipments(self, name):
+        return list(set([s.id for l in self.lines if l.shipments
+                        for s in l.shipments]))
+
+    def get_shipment_returns(self, name):
+        return list(set([s.id for l in self.lines if l.shipment_returns
+                        for s in l.shipment_returns]))
 
 
 class InvoiceLine():
@@ -47,6 +63,11 @@ class InvoiceLine():
                     ).get('type').in_(['in_invoice', 'in_credit_note',
                     'out_invoice']),
                 }), 'get_shipment_returns')
+    shipment_info = fields.Function(fields.Char('Shipment Info',
+            states={
+                'invisible': Eval('_parent_invoice', {}
+                    ).get('type').in_(['in_invoice', 'in_credit_note']),
+                }), 'get_shipment_info')
 
     def get_sale(self, name):
         SaleLine = Pool().get('sale.line')
@@ -66,6 +87,11 @@ class InvoiceLine():
 
     get_shipments = get_shipments_returns('stock.shipment.out')
     get_shipment_returns = get_shipments_returns('stock.shipment.out.return')
+
+    def get_shipment_info(self, name):
+        info = ','.join([s.code for s in self.shipments] +
+            [s.code for s in self.shipment_returns])
+        return info
 
 
 class Move():
