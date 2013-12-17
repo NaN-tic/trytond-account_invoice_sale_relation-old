@@ -2,6 +2,14 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:account.invoice,shipment_returns:"
+msgid "Shipment Returns"
+msgstr "Albarans de devolució"
+
+msgctxt "field:account.invoice,shipments:"
+msgid "Shipments"
+msgstr "Albarans"
+
 msgctxt "field:account.invoice.line,moves:"
 msgid "Moves"
 msgstr "Moviments"
