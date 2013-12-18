@@ -93,10 +93,26 @@ class InvoiceLine():
             [s.code for s in self.shipment_returns])
         return info
 
+    @classmethod
+    def copy(cls, lines, default=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default['moves'] = None
+        return super(InvoiceLine, cls).copy(lines, default=default)
+
 
 class Move():
     __name__ = 'stock.move'
     invoice_line = fields.Many2One('account.invoice.line', 'Invoice Line')
+
+    @classmethod
+    def copy(cls, moves, default=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default['invoice_line'] = None
+        return super(Move, cls).copy(moves, default=default)
 
 
 class SaleLine():
