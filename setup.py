@@ -7,7 +7,7 @@ import os
 import ConfigParser
 
 MODULE = 'account_invoice_sale_relation'
-PREFIX = 'nantic'
+PREFIX = 'trytonzz'
 MODULE2PREFIX = {}
 
 
@@ -43,7 +43,7 @@ setup(name='%s_%s' % (PREFIX, MODULE),
     long_description=read('README'),
     author='NaN·tic',
     url='http://www.nan-tic.com/',
-    download_url="https://bitbucket.org/nantic/trytond-%s" % MODULE,
+    download_url="https://bitbucket.org/zikzakmedia/trytond-%s" % MODULE,
     package_dir={'trytond.modules.%s' % MODULE: '.'},
     packages=[
         'trytond.modules.%s' % MODULE,
@@ -51,7 +51,7 @@ setup(name='%s_%s' % (PREFIX, MODULE),
         ],
     package_data={
         'trytond.modules.%s' % MODULE: (info.get('xml', [])
-            + ['tryton.cfg', 'locale/*.po', 'view/*.xml', 'tests/*.rst']),
+            + ['tryton.cfg', 'locale/*.po', 'view/*.xml']),
         },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
