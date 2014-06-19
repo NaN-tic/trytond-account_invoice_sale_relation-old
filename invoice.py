@@ -54,15 +54,13 @@ class InvoiceLine():
             'Shipments',
             states={
                 'invisible': Eval('_parent_invoice', {}
-                    ).get('type').in_(['in_invoice', 'in_credit_note',
-                    'out_credit_note']),
+                    ).get('type').in_(['in_invoice', 'in_credit_note']),
                 }), 'get_shipments')
     shipment_returns = fields.Function(
         fields.One2Many('stock.shipment.out.return', None, 'Shipment Returns',
             states={
                 'invisible': Eval('_parent_invoice', {}
-                    ).get('type').in_(['in_invoice', 'in_credit_note',
-                    'out_invoice']),
+                    ).get('type').in_(['in_invoice', 'in_credit_note']),
                 }), 'get_shipment_returns')
     shipment_info = fields.Function(fields.Char('Shipment Info',
             states={
