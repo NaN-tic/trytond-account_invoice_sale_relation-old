@@ -3,6 +3,8 @@
 from trytond.model import fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
+from trytond import backend
+from trytond.transaction import Transaction
 
 __all__ = ['Invoice', 'InvoiceLine']
 
@@ -67,6 +69,27 @@ class InvoiceLine():
                 'invisible': Eval('_parent_invoice', {}
                     ).get('type').in_(['in_invoice', 'in_credit_note']),
                 }), 'get_shipment_info')
+
+    @classmethod
+    def __register__(cls, module_name):
+        TableHandler = backend.get('TableHandler')
+        super(InvoiceLine, cls).__register__(module_name)
+        cursor = Transaction().cursor
+
+        # Migration from 3.0: Change relation between 'account_invoice_line'
+        # and 'stock.move from o2m to m2m
+        Move = Pool().get('stock.move')
+        table = TableHandler(cursor, Move, module_name)
+        if table.column_exist('invoice_line'):
+            m_table = Move.__table__()
+            cursor.execute(*m_table.select(m_table.id, m_table.invoice_line,
+                where=m_table.invoice_line != None))
+            with Transaction().set_user(0):
+                for move_id, invoice_line_id in cursor.fetchall():
+                    move = Move(move_id)
+                    move.invoice_lines = [invoice_line_id]
+                    move.save()
+            table.drop_column('invoice_line')
 
     def get_sale(self, name):
         SaleLine = Pool().get('sale.line')
