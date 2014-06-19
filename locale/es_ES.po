@@ -10,13 +10,13 @@ msgctxt "field:account.invoice,shipments:"
 msgid "Shipments"
 msgstr "Albaranes"
 
-msgctxt "field:account.invoice.line,moves:"
-msgid "Moves"
-msgstr "Movimientos"
-
 msgctxt "field:account.invoice.line,sale:"
 msgid "Sale"
 msgstr "Venta"
+
+msgctxt "field:account.invoice.line,shipment_info:"
+msgid "Shipment Info"
+msgstr "Info albaranes"
 
 msgctxt "field:account.invoice.line,shipment_returns:"
 msgid "Shipment Returns"
@@ -25,10 +25,6 @@ msgstr "Albaranes de devolución"
 msgctxt "field:account.invoice.line,shipments:"
 msgid "Shipments"
 msgstr "Albaranes"
-
-msgctxt "field:stock.move,invoice_line:"
-msgid "Invoice Line"
-msgstr "Línea de factura"
 
 msgctxt "view:account.invoice.line:"
 msgid "Relation"
