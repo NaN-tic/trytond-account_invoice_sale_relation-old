@@ -27,5 +27,5 @@ msgid "Shipments"
 msgstr "Albaranes"
 
 msgctxt "view:account.invoice.line:"
-msgid "Relation"
-msgstr "Relaciones"
+msgid "Sale"
+msgstr "Venta"

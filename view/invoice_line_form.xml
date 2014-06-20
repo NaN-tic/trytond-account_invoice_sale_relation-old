@@ -5,7 +5,9 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <xpath
         expr="/form/notebook/page[@id=&quot;general&quot;]"
         position="after">
-            <page string="Relation" id="relation">
+            <page string="Sale"
+                states="{'invisible': ~Get(Eval('_parent_invoice', {}), 'type').in_(['out_invoice', 'out_credit_note'])}"
+                id="sale">
                 <label name="sale"/>
                 <field name="sale"/>
             </page>
