@@ -13,10 +13,6 @@ __metaclass__ = PoolMeta
 
 class Invoice():
     __name__ = 'account.invoice'
-    sales = fields.Function(fields.Many2Many('sale.sale', None, None, 'Sales',
-            states={
-                'invisible': Eval('type').in_(['in_invoice', 'in_credit_note']),
-                }), 'get_sales')
     shipments = fields.Function(
         fields.Many2Many('stock.shipment.out', None, None, 'Shipments',
             states={
@@ -30,9 +26,6 @@ class Invoice():
                 'invisible': Eval('type').in_(['in_invoice', 'in_credit_note',
                     'out_invoice']),
                 }), 'get_shipment_returns')
-
-    def get_sales(self, name):
-        return list(set([l.sale.id for l in self.lines if l.sale]))
 
     def get_shipments(self, name):
         return list(set([s.id for l in self.lines if l.shipments
