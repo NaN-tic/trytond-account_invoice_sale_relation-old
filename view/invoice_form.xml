@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- This file is part of account_invoice_sale_relation module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath
+        expr="/form/notebook/page[@id=&quot;payment&quot;]"
+        position="after">
+            <page string="Sales"
+                states="{'invisible': ~Eval('type').in_(['out_invoice', 'out_credit_note'])}"
+                id="sales">
+                <field name="sales"/>
+            </page>
+    </xpath>
+</data>
