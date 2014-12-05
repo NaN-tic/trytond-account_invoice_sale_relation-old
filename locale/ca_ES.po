@@ -29,3 +29,7 @@ msgstr "Albarans"
 msgctxt "view:account.invoice.line:"
 msgid "Sale"
 msgstr "Venda"
+
+msgctxt "view:account.invoice:"
+msgid "Sales"
+msgstr "Vendes"
