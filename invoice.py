@@ -18,14 +18,14 @@ class Invoice():
             states={
                 'invisible': Eval('type').in_(['in_invoice', 'in_credit_note',
                     'out_credit_note']),
-                }), 'get_shipments')
+                }), 'get_shipments', searcher='search_shipments')
     shipment_returns = fields.Function(
         fields.Many2Many('stock.shipment.out.return', None, None,
             'Shipment Returns',
             states={
                 'invisible': Eval('type').in_(['in_invoice', 'in_credit_note',
                     'out_invoice']),
-                }), 'get_shipment_returns')
+                }), 'get_shipment_returns', searcher='search_shipment_returns')
 
     def get_shipments(self, name):
         return list(set([s.id for l in self.lines if l.shipments
@@ -34,6 +34,14 @@ class Invoice():
     def get_shipment_returns(self, name):
         return list(set([s.id for l in self.lines if l.shipment_returns
                         for s in l.shipment_returns]))
+
+    @classmethod
+    def search_shipments(cls, name, clause):
+        return [('lines.shipments',) + tuple(clause[1:])]
+
+    @classmethod
+    def search_shipment_returns(cls, name, clause):
+        return [('lines.shipment_returns',) + tuple(clause[1:])]
 
 
 class InvoiceLine():
@@ -48,13 +56,13 @@ class InvoiceLine():
             states={
                 'invisible': Eval('_parent_invoice', {}
                     ).get('type').in_(['in_invoice', 'in_credit_note']),
-                }), 'get_shipments')
+                }), 'get_shipments', searcher='search_shipments')
     shipment_returns = fields.Function(
         fields.One2Many('stock.shipment.out.return', None, 'Shipment Returns',
             states={
                 'invisible': Eval('_parent_invoice', {}
                     ).get('type').in_(['in_invoice', 'in_credit_note']),
-                }), 'get_shipment_returns')
+                }), 'get_shipment_returns', searcher='search_shipment_returns')
     shipment_info = fields.Function(fields.Char('Shipment Info',
             states={
                 'invisible': Eval('_parent_invoice', {}
@@ -100,6 +108,14 @@ class InvoiceLine():
 
     get_shipments = get_shipments_returns('stock.shipment.out')
     get_shipment_returns = get_shipments_returns('stock.shipment.out.return')
+
+    @classmethod
+    def search_shipments(cls, name, clause):
+        return [('stock_moves.shipment',) + tuple(clause[1:])]
+
+    @classmethod
+    def search_shipment_returns(cls, name, clause):
+        return [('stock_moves.shipment',) + tuple(clause[1:])]
 
     def get_shipment_info(self, name):
         info = ','.join([s.code for s in self.shipments] +

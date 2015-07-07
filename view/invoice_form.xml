@@ -8,7 +8,9 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <page string="Sales"
                 states="{'invisible': ~Eval('type').in_(['out_invoice', 'out_credit_note'])}"
                 id="sales">
-                <field name="sales"/>
+                <field name="sales" colspan="4"/>
+                <field name="shipments" colspan="4"/>
+                <field name="shipment_returns" colspan="4"/>
             </page>
     </xpath>
 </data>
