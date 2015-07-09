@@ -2,7 +2,7 @@
 # copyright notices and license terms.
 from trytond.model import fields
 from trytond.pool import Pool, PoolMeta
-from trytond.pyson import Eval
+from trytond.pyson import If, Eval, Bool
 from trytond import backend
 from trytond.transaction import Transaction
 
@@ -12,6 +12,14 @@ from sql.operators import Concat
 __all__ = ['Invoice', 'InvoiceLine']
 
 __metaclass__ = PoolMeta
+
+_STATES = {
+    'invisible': If(Bool(Eval('_parent_invoice')),
+        ~Eval('_parent_invoice', {}).get('type')
+            .in_(['out_invoice', 'out_credit_note']),
+        ~Eval('invoice_type')
+            .in_(['out_invoice', 'out_credit_note'])),
+}
 
 
 class Invoice():
@@ -99,27 +107,16 @@ class Invoice():
 class InvoiceLine():
     __name__ = 'account.invoice.line'
     sale = fields.Function(fields.Many2One('sale.sale', 'Sale',
-            states={
-                'invisible': Eval('_parent_invoice', {}
-                    ).get('type').in_(['in_invoice', 'in_credit_note']),
-                }), 'get_sale')
+            states=_STATES), 'get_sale')
     shipments = fields.Function(fields.One2Many('stock.shipment.out', None,
-            'Shipments',
-            states={
-                'invisible': Eval('_parent_invoice', {}
-                    ).get('type').in_(['in_invoice', 'in_credit_note']),
-                }), 'get_shipments', searcher='search_shipments')
+            'Shipments', states=_STATES),
+        'get_shipments', searcher='search_shipments')
     shipment_returns = fields.Function(
         fields.One2Many('stock.shipment.out.return', None, 'Shipment Returns',
-            states={
-                'invisible': Eval('_parent_invoice', {}
-                    ).get('type').in_(['in_invoice', 'in_credit_note']),
-                }), 'get_shipment_returns', searcher='search_shipment_returns')
+            states=_STATES),
+        'get_shipment_returns', searcher='search_shipment_returns')
     shipment_info = fields.Function(fields.Char('Shipment Info',
-            states={
-                'invisible': Eval('_parent_invoice', {}
-                    ).get('type').in_(['in_invoice', 'in_credit_note']),
-                }), 'get_shipment_info')
+            states=_STATES), 'get_shipment_info')
 
     @classmethod
     def __register__(cls, module_name):

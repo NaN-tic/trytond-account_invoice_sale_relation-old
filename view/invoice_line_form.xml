@@ -3,20 +3,12 @@
 The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
 <data>
     <xpath
-        expr="/form/notebook/page[@id=&quot;general&quot;]"
-        position="after">
-            <page string="Sale"
-                states="{'invisible': ~Get(Eval('_parent_invoice', {}), 'type').in_(['out_invoice', 'out_credit_note'])}"
-                id="sale">
-                <label name="sale"/>
-                <field name="sale"/>
-            </page>
-    </xpath>
-    <xpath
         expr="/form/notebook/page[@id=&quot;stock&quot;]/field[@name=&quot;stock_moves&quot;]"
         position="after">
             <label name="shipment_info"/>
             <field name="shipment_info"/>
+            <label name="sale"/>
+            <field name="sale"/>
             <field name="shipments" colspan="4"/>
             <field name="shipment_returns" colspan="4"/>
     </xpath>
