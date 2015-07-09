@@ -2,9 +2,9 @@
 Facturación. Relación entre facturas y pedidos de venta
 =======================================================
 
-El módulo account invoice sale relation dispone de la información entre facturas
-y pedidos de venta.
+El módulo account invoice sale relation permite consultar las ventas y
+albaranes relacionados con facturas de cliente y líneas de factura de
+cliente.
 
-Además, disponemos información en las líneas de la factura
-con los movimientos. Así podemos obtener a partir de los movimientos que
-albaranes han generado las líneas de factura.
+También permite filtrar facturas y líneas de factura relacionadas con una venta
+o con un albarán/albarán de devolución de cliente.
