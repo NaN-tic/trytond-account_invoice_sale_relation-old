@@ -25,14 +25,15 @@ _STATES = {
 class Invoice():
     __name__ = 'account.invoice'
     shipments = fields.Function(
-        fields.Many2Many('stock.shipment.out', None, None, 'Shipments',
+        fields.Many2Many('stock.shipment.out', None, None,
+            'Customer Shipments',
             states={
                 'invisible': Eval('type').in_(['in_invoice', 'in_credit_note',
                     'out_credit_note']),
                 }), 'get_shipments', searcher='search_shipments')
     shipment_returns = fields.Function(
         fields.Many2Many('stock.shipment.out.return', None, None,
-            'Shipment Returns',
+            'Customer Return Shipments',
             states={
                 'invisible': Eval('type').in_(['in_invoice', 'in_credit_note',
                     'out_invoice']),
@@ -109,13 +110,13 @@ class InvoiceLine():
     sale = fields.Function(fields.Many2One('sale.sale', 'Sale',
             states=_STATES), 'get_sale')
     shipments = fields.Function(fields.One2Many('stock.shipment.out', None,
-            'Shipments', states=_STATES),
+            'Customer Shipments', states=_STATES),
         'get_shipments', searcher='search_shipments')
     shipment_returns = fields.Function(
-        fields.One2Many('stock.shipment.out.return', None, 'Shipment Returns',
-            states=_STATES),
+        fields.One2Many('stock.shipment.out.return', None,
+            'Customer Return Shipments', states=_STATES),
         'get_shipment_returns', searcher='search_shipment_returns')
-    shipment_info = fields.Function(fields.Char('Shipment Info',
+    shipment_info = fields.Function(fields.Char('Customer Shipment Info',
             states=_STATES), 'get_shipment_info')
 
     @classmethod

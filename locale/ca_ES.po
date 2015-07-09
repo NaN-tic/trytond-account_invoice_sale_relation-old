@@ -3,32 +3,28 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "field:account.invoice,shipment_returns:"
-msgid "Shipment Returns"
-msgstr "Albarans de devolució"
+msgid "Customer Return Shipments"
+msgstr "Albarans devolució de client"
 
 msgctxt "field:account.invoice,shipments:"
-msgid "Shipments"
-msgstr "Albarans"
+msgid "Customer Shipments"
+msgstr "Albarans de client"
 
 msgctxt "field:account.invoice.line,sale:"
 msgid "Sale"
 msgstr "Venda"
 
 msgctxt "field:account.invoice.line,shipment_info:"
-msgid "Shipment Info"
-msgstr "Info albarans"
+msgid "Customer Shipment Info"
+msgstr "Info albarans de client"
 
 msgctxt "field:account.invoice.line,shipment_returns:"
-msgid "Shipment Returns"
-msgstr "Albarans de devolució"
+msgid "Customer Return Shipments"
+msgstr "Albarans devolució de client"
 
 msgctxt "field:account.invoice.line,shipments:"
-msgid "Shipments"
-msgstr "Albarans"
-
-msgctxt "view:account.invoice.line:"
-msgid "Sale"
-msgstr "Venda"
+msgid "Customer Shipments"
+msgstr "Albarans de client"
 
 msgctxt "view:account.invoice:"
 msgid "Sales"
