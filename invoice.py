@@ -6,6 +6,9 @@ from trytond.pyson import Eval
 from trytond import backend
 from trytond.transaction import Transaction
 
+from sql import Cast
+from sql.operators import Concat
+
 __all__ = ['Invoice', 'InvoiceLine']
 
 __metaclass__ = PoolMeta
@@ -38,52 +41,58 @@ class Invoice():
     @classmethod
     def search_shipments(cls, name, clause):
         pool = Pool()
-        Shipment = pool.get('stock.shipment.out')
         InvoiceLine = pool.get('account.invoice.line')
         InvoiceLineStockMove = pool.get('account.invoice.line-stock.move')
         StockMove = pool.get('stock.move')
+        Shipment = pool.get('stock.shipment.out')
         invoice_line = InvoiceLine.__table__()
         invoice_line_stock_move = InvoiceLineStockMove.__table__()
         stock_move = StockMove.__table__()
 
         clause = Shipment.search_rec_name(name, clause)
-        shipments = Shipment.search(clause)
-        shipments = ['stock.shipment.out,' + str(s.id) for s in shipments]
-
+        tables, condition = Shipment.search_domain(clause)
+        shipment = tables[None][0]
+        _, shipment_type = StockMove.shipment.sql_type()
         query = (invoice_line
             .join(invoice_line_stock_move,
                 condition=invoice_line.id ==
                 invoice_line_stock_move.invoice_line)
             .join(stock_move,
                 condition=invoice_line_stock_move.stock_move == stock_move.id)
+            .join(shipment,
+                condition=stock_move.shipment == Concat('stock.shipment.out,',
+                    Cast(shipment.id, shipment_type)))
             .select(invoice_line.invoice,
-                where=stock_move.shipment.in_(shipments)))
+                where=condition))
         return [('id', 'in', query)]
 
     @classmethod
     def search_shipment_returns(cls, name, clause):
         pool = Pool()
-        Shipment = pool.get('stock.shipment.out.return')
         InvoiceLine = pool.get('account.invoice.line')
         InvoiceLineStockMove = pool.get('account.invoice.line-stock.move')
         StockMove = pool.get('stock.move')
+        Shipment = pool.get('stock.shipment.out.return')
         invoice_line = InvoiceLine.__table__()
         invoice_line_stock_move = InvoiceLineStockMove.__table__()
         stock_move = StockMove.__table__()
 
         clause = Shipment.search_rec_name(name, clause)
-        shipments = Shipment.search(clause)
-        shipments = ['stock.shipment.out.return,' + str(s.id)
-            for s in shipments]
-
+        tables, condition = Shipment.search_domain(clause)
+        shipment = tables[None][0]
+        _, shipment_type = StockMove.shipment.sql_type()
         query = (invoice_line
             .join(invoice_line_stock_move,
                 condition=invoice_line.id ==
                 invoice_line_stock_move.invoice_line)
             .join(stock_move,
                 condition=invoice_line_stock_move.stock_move == stock_move.id)
+            .join(shipment,
+                condition=stock_move.shipment ==
+                Concat('stock.shipment.out.return,',
+                    Cast(shipment.id, shipment_type)))
             .select(invoice_line.invoice,
-                where=stock_move.shipment.in_(shipments)))
+                where=condition))
         return [('id', 'in', query)]
 
 
@@ -155,42 +164,48 @@ class InvoiceLine():
     @classmethod
     def search_shipments(cls, name, clause):
         pool = Pool()
-        Shipment = pool.get('stock.shipment.out')
         InvoiceLineStockMove = pool.get('account.invoice.line-stock.move')
         StockMove = pool.get('stock.move')
+        Shipment = pool.get('stock.shipment.out')
         invoice_line_stock_move = InvoiceLineStockMove.__table__()
         stock_move = StockMove.__table__()
 
         clause = Shipment.search_rec_name(name, clause)
-        shipments = Shipment.search(clause)
-        shipments = ['stock.shipment.out,' + str(s.id) for s in shipments]
-
+        tables, condition = Shipment.search_domain(clause)
+        shipment = tables[None][0]
+        _, shipment_type = StockMove.shipment.sql_type()
         query = (invoice_line_stock_move
             .join(stock_move,
                 condition=invoice_line_stock_move.stock_move == stock_move.id)
+            .join(shipment,
+                condition=stock_move.shipment == Concat('stock.shipment.out,',
+                    Cast(shipment.id, shipment_type)))
             .select(invoice_line_stock_move.invoice_line,
-                where=stock_move.shipment.in_(shipments)))
+                where=condition))
         return [('id', 'in', query)]
 
     @classmethod
     def search_shipment_returns(cls, name, clause):
         pool = Pool()
-        Shipment = pool.get('stock.shipment.out.return')
         InvoiceLineStockMove = pool.get('account.invoice.line-stock.move')
         StockMove = pool.get('stock.move')
+        Shipment = pool.get('stock.shipment.out.return')
         invoice_line_stock_move = InvoiceLineStockMove.__table__()
         stock_move = StockMove.__table__()
 
         clause = Shipment.search_rec_name(name, clause)
-        shipments = Shipment.search(clause)
-        shipments = ['stock.shipment.out.return,' + str(s.id)
-            for s in shipments]
-
+        tables, condition = Shipment.search_domain(clause)
+        shipment = tables[None][0]
+        _, shipment_type = StockMove.shipment.sql_type()
         query = (invoice_line_stock_move
             .join(stock_move,
                 condition=invoice_line_stock_move.stock_move == stock_move.id)
+            .join(shipment,
+                condition=stock_move.shipment ==
+                Concat('stock.shipment.out.return,',
+                    Cast(shipment.id, shipment_type)))
             .select(invoice_line_stock_move.invoice_line,
-                where=stock_move.shipment.in_(shipments)))
+                where=condition))
         return [('id', 'in', query)]
 
     def get_shipment_info(self, name):
