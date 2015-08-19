@@ -104,6 +104,13 @@ class Invoice():
                 where=condition))
         return [('id', 'in', query)]
 
+    @classmethod
+    def view_attributes(cls):
+        return super(Invoice, cls).view_attributes() + [
+            ('/form/notebook/page[@id="sales"]', 'state', {
+                    'invisible': ~Eval('type').in_(['out_invoice', 'out_credit_note']),
+                    })]
+
 
 class InvoiceLine():
     __name__ = 'account.invoice.line'
