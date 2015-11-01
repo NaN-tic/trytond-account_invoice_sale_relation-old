@@ -3,7 +3,6 @@
 from trytond.pool import Pool
 from .invoice import *
 
-
 def register():
     Pool.register(
         Invoice,

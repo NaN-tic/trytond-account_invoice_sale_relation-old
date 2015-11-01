@@ -22,7 +22,7 @@ _STATES = {
 }
 
 
-class Invoice():
+class Invoice:
     __name__ = 'account.invoice'
     shipments = fields.Function(
         fields.Many2Many('stock.shipment.out', None, None,
@@ -112,7 +112,7 @@ class Invoice():
                     })]
 
 
-class InvoiceLine():
+class InvoiceLine:
     __name__ = 'account.invoice.line'
     sale = fields.Function(fields.Many2One('sale.sale', 'Sale',
             states=_STATES), 'get_sale')
