@@ -130,12 +130,12 @@ class InvoiceLine:
     def __register__(cls, module_name):
         TableHandler = backend.get('TableHandler')
         super(InvoiceLine, cls).__register__(module_name)
-        cursor = Transaction().cursor
+        cursor = Transaction().connection.cursor()
 
         # Migration from 3.0: Change relation between 'account_invoice_line'
         # and 'stock.move from o2m to m2m
         Move = Pool().get('stock.move')
-        table = TableHandler(cursor, Move, module_name)
+        table = TableHandler(Move, module_name)
         if table.column_exist('invoice_line'):
             m_table = Move.__table__()
             cursor.execute(*m_table.select(m_table.id, m_table.invoice_line,
