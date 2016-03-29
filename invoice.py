@@ -11,8 +11,6 @@ from sql.operators import Concat
 
 __all__ = ['Invoice', 'InvoiceLine']
 
-__metaclass__ = PoolMeta
-
 _STATES = {
     'invisible': If(Bool(Eval('_parent_invoice')),
         ~Eval('_parent_invoice', {}).get('type')
@@ -23,6 +21,7 @@ _STATES = {
 
 
 class Invoice:
+    __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
     shipments = fields.Function(
         fields.Many2Many('stock.shipment.out', None, None,
@@ -113,6 +112,7 @@ class Invoice:
 
 
 class InvoiceLine:
+    __metaclass__ = PoolMeta
     __name__ = 'account.invoice.line'
     sale = fields.Function(fields.Many2One('sale.sale', 'Sale',
             states=_STATES), 'get_sale')
