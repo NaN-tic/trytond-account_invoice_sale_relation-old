@@ -232,6 +232,5 @@ class InvoiceLine:
         return [('id', 'in', query)]
 
     def get_shipment_info(self, name):
-        info = ','.join([s.reference for s in self.shipments] +
-            [s.reference for s in self.shipment_returns])
-        return info
+        return ','.join([s.number for s in self.shipments] +
+            [s.number for s in self.shipment_returns])
